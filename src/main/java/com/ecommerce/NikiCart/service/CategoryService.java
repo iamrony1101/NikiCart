@@ -2,6 +2,7 @@ package com.ecommerce.NikiCart.service;
 
 import com.ecommerce.NikiCart.DTO.CategoryDTO;
 import com.ecommerce.NikiCart.DTO.CategoryResponse;
+import com.ecommerce.NikiCart.DTO.ProductResponse;
 import com.ecommerce.NikiCart.exceptions.APIException;
 import com.ecommerce.NikiCart.exceptions.ResourceNotFoundException;
 import com.ecommerce.NikiCart.model.Category;
@@ -87,4 +88,6 @@ public class CategoryService {
         categoryRepository.delete(delete);
         return modelMapper.map(delete, CategoryDTO.class);
     }
+
+
 }
