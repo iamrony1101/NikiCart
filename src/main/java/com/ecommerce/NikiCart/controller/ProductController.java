@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -25,9 +27,9 @@ public class ProductController {
 
     @PostMapping("/admin/categories/{categoryId}/product")
     public ResponseEntity<ProductDTO> addProduct(@PathVariable Long categoryId,
-                                                 @RequestBody Product product) {
-      ProductDTO productDTO=  productService.addProduct(categoryId,product);
-      return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+                                                 @RequestBody ProductDTO productDTO) {
+      ProductDTO savedProductDto=  productService.addProduct(categoryId,productDTO);
+      return new ResponseEntity<>(savedProductDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/public/products")
@@ -50,15 +52,22 @@ public class ProductController {
 
     @PutMapping("/admin/products/{productId}")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long productId,
-                                                    @RequestBody Product product){
-        ProductDTO productDTO = productService.updateProduct(productId,product);
-        return new ResponseEntity<>(productDTO,HttpStatus.ACCEPTED);
+                                                    @RequestBody ProductDTO productDTO){
+        ProductDTO updateProductDTO = productService.updateProduct(productId,productDTO);
+        return new ResponseEntity<>(updateProductDTO,HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/admin/products/{productId}")
     public ResponseEntity<ProductDTO> deleteProduct(@PathVariable Long productId){
         ProductDTO productResponse= productService.deleteProduct(productId);
         return new ResponseEntity<>(productResponse,HttpStatus.OK);
+    }
+
+    @PutMapping("/product/{productId}/image")
+    public ResponseEntity<ProductDTO> updateProductImage(@PathVariable Long productId,
+                                                         @RequestParam("image")MultipartFile image) throws IOException {
+        ProductDTO updateImage = productService.updateProductImage(productId, image);
+        return new ResponseEntity<>(updateImage,HttpStatus.OK);
     }
 
 
