@@ -52,6 +52,7 @@ public class WebSecurityConfig {
         return authenticationProvider;
     }
 
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authconfig) {
         return authconfig.getAuthenticationManager();
     }
@@ -67,8 +68,8 @@ public class WebSecurityConfig {
                 request.requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/public/**").permitAll()
-                        .requestMatchers("/api/admin/**").permitAll()
+                        //.requestMatchers("/api/public/**").permitAll()
+                        //.requestMatchers("/api/admin/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .anyRequest().authenticated());
@@ -86,6 +87,7 @@ public class WebSecurityConfig {
         http.addFilterBefore(authenticationJwtTokenFilter(),
                 UsernamePasswordAuthenticationFilter.class);
 
+
         return http.build();
     }
 
@@ -99,4 +101,6 @@ public class WebSecurityConfig {
                 "/swagger-ui.html",
                 "/webjars/**"));
     }
+
+
 }
