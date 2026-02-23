@@ -28,6 +28,4 @@ public class Cart {
 
     private Double totalPrice=0.0;
 
-
-
 }

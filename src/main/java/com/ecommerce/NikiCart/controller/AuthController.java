@@ -56,7 +56,6 @@ public class AuthController {
                             loginRequest.getUsername(),
                             loginRequest.getPassword()
                     )
-
             );
 
 
@@ -77,10 +76,12 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        String jwt = jwtUtils.generateTokenFromUsername(userDetails.getUsername());
+
         UserInfoResponse response = new UserInfoResponse(
                 userDetails.getId(),
                 userDetails.getUsername(),
-                roles);
+                roles,jwt);
 
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
                 jwtCookie.toString())
